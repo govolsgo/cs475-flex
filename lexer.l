@@ -6,23 +6,23 @@
 %%
 //here go the patterns and actions
 //PATTERN                         {//code response}
-int				{}
-float				{}
+int				{cout << "<INT>";}
+float				{cout << "<FLOAT>";}
 \d+\.\d+			{}
 [\d]+				{}
-\[				{}
-\]				{}
-=				{}
-\t				{}
-\n",				{}
+\[				{cout << "<LSQB>";}
+\]				{cout << "<RSQB>";}
+=				{cout << "<EQUAL>";}
+\t				{cout << "<TAB>";}
+\n",				{cout << "<NL>\n";}
 <=|!=|>=|==|<|>]		{}
 \+=|-=|\*=|/=			{}
 [*/+-]				{}
-\(				{}
-\)				{}
-\{				{}
-\}				{}
-if				{}
+\(				{cout << "<LPAREN>";}
+\)				{cout << "<RPAREN>";}
+\{				{cout << "<LCURL>";}
+\}				{cout << "<RCURL>";}
+if				{cout << "<IF>";}
 ([\w\d_])+			{}
 %%
 //code goes here (main)
