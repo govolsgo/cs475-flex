@@ -7,30 +7,28 @@
 #include <iterator>
 using namespace std;
 
-  vector<string> symbolTable;
-  %}
-%option noyywrap //keep this, it keeps flex from misbehaving/making your life more difficult
+vector<string> symbolTable;
+%}
+%option noyywrap 
 %%
-//here go the patterns and actions
-//PATTERN                         {//code response}
 int				{cout << "<INT>";}
 float				{cout << "<FLOAT>";}
-\d+\.\d+			{cout << "<REAL," << symbolTableLoc("REAL",yytext) << ">";}
-[\d]+				{cout << "<INTEGER," << symbolTableLoc("INTEGER",yytext) << ">";}
+[0-9]+\.[0-9]+			{cout << "<REAL," << symbolTableLoc("REAL",yytext) << ">";}
+[0-9]+				{cout << "<INTEGER," << symbolTableLoc("INTEGER",yytext) << ">";}
 \[				{cout << "<LSQB>";}
 \]				{cout << "<RSQB>";}
 =				{cout << "<EQUAL>";}
 \t				{cout << "<TAB>";}
 \n				{cout << "<NL>\n";}
-<=|!=|>=|==|<|>]		{cout << "<COMPARISON," << yytext << ">";}
-\+=|-=|\*=|/=			{cout << "<COMBO," << yytext << ">";}
+(<=|!=|>=|==|<|>)		{cout << "<COMPARISON," << yytext << ">";}
+(\+=|\-=|\*=|\/=)		{cout << "<COMBO," << yytext << ">";}
 [*/+-]				{cout << "<OP," << yytext << ">";}
 \(				{cout << "<LPAREN>";}
 \)				{cout << "<RPAREN>";}
-\{				{cout << "<LCURL>";}
-\}				{cout << "<RCURL>";}
+{				{cout << "<LCURL>";}
+}				{cout << "<RCURL>";}
 if				{cout << "<IF>";}
-([\w\d_])+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
+([a-zA-Z0-9_])+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
 %%
 //code goes here (main)
 int main()
