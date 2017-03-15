@@ -19,7 +19,7 @@ float				{cout << "<FLOAT>";}
 [0-9]+				{cout << "<INTEGER," << symbolTableLoc("INTEGER",yytext) << ">";}
 \[				{cout << "<LSQB>";}
 \]				{cout << "<RSQB>";}
-=				{cout << "<EQUAL>";}
+=				{cout << "<EQUAL,=>";}
 \t				{cout << "<TAB>";}
 \n				{cout << "<NL>\n";}
 (<=|!=|>=|==|<|>)		{cout << "<COMPARISON," << yytext << ">";}
@@ -27,10 +27,11 @@ float				{cout << "<FLOAT>";}
 [*/+-]				{cout << "<OP," << yytext << ">";}
 \(				{cout << "<LPAREN>";}
 \)				{cout << "<RPAREN>";}
-{				{cout << "<LCURL>";}
-}				{cout << "<RCURL>";}
+\{				{cout << "<LCURL>";}
+\}				{cout << "<RCURL>";}
 if				{cout << "<IF>";}
-[a-zA-Z]+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
+[a-zA-Z0-9_]+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
+[[:blank:]]			{}
 %%
 //code goes here (main)
 int main()
