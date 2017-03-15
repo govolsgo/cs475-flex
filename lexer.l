@@ -15,33 +15,33 @@ using namespace std;
 //PATTERN                         {//code response}
 int				{cout << "<INT>";}
 float				{cout << "<FLOAT>";}
-\d+\.\d+			{}
-[\d]+				{}
+\d+\.\d+			{cout << "<REAL," << symbolTableLoc("REAL",yytext) << ">";}
+[\d]+				{cout << "<INTEGER," << symbolTableLoc("INTEGER",yytext) << ">";}
 \[				{cout << "<LSQB>";}
 \]				{cout << "<RSQB>";}
 =				{cout << "<EQUAL>";}
 \t				{cout << "<TAB>";}
 \n				{cout << "<NL>\n";}
-<=|!=|>=|==|<|>]		{}
-\+=|-=|\*=|/=			{}
-[*/+-]				{}
+<=|!=|>=|==|<|>]		{cout << "<COMPARISON," << yytext << ">";}
+\+=|-=|\*=|/=			{cout << "<COMBO," << yytext << ">";}
+[*/+-]				{cout << "<OP," << yytext << ">";}
 \(				{cout << "<LPAREN>";}
 \)				{cout << "<RPAREN>";}
 \{				{cout << "<LCURL>";}
 \}				{cout << "<RCURL>";}
 if				{cout << "<IF>";}
-([\w\d_])+			{}
+([\w\d_])+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
 %%
 //code goes here (main)
 int main()
 {
     FlexLexer* lexer = new yyFlexLexer;
     while(lexer->yylex() != 0)
-      ;
+      cout << "Running!\n";
     return 0;
 }
 
-int symbolTable(string key, string value)
+int symbolTableLoc(string key, string value)
 {
   vector<string>::iterator itKey;
   vector<string>::iterator itVal;
