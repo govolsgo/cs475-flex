@@ -7,6 +7,8 @@
 #include <iterator>
 using namespace std;
 
+int symbolTableLoc(string key, string value);
+
 vector<string> symbolTable;
 %}
 %option noyywrap 
@@ -28,14 +30,13 @@ float				{cout << "<FLOAT>";}
 {				{cout << "<LCURL>";}
 }				{cout << "<RCURL>";}
 if				{cout << "<IF>";}
-([a-zA-Z0-9_])+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
+[a-zA-Z]+			{cout << "<ID," << symbolTableLoc("ID",yytext) << ">";}
 %%
 //code goes here (main)
 int main()
 {
     FlexLexer* lexer = new yyFlexLexer;
-    while(lexer->yylex() != 0)
-      cout << "Running!\n";
+    while(lexer->yylex() != 0);
     return 0;
 }
 
@@ -57,7 +58,8 @@ int symbolTableLoc(string key, string value)
 	}
       else
 	{
-	  itKey = find(itKey++, symbolTable.end(), key);
+	  itKey++;
+	  itKey = find(itKey, symbolTable.end(), key);
 	}
     }
 
@@ -65,5 +67,5 @@ int symbolTableLoc(string key, string value)
   symbolTable.push_back(key);
   symbolTable.push_back(value);
 
-  return (symbolTable.size() / 2) + 1;
+  return (symbolTable.size() / 2);
 }
