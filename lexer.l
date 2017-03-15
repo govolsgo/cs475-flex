@@ -5,7 +5,10 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <fstream>
 using namespace std;
+
+  //std::istream* yyin;
 
 int symbolTableLoc(string key, string value);
 
@@ -36,9 +39,16 @@ if				{cout << "<IF>";}
 //code goes here (main)
 int main()
 {
-    FlexLexer* lexer = new yyFlexLexer;
-    while(lexer->yylex() != 0);
-    return 0;
+  ifstream input;
+  string file;
+  cout << "Enter file to parse: ";
+  cin >> file;
+  input.open(file);
+  cout << "*** Tokenized Results ***" << endl;
+
+  FlexLexer* lexer = new yyFlexLexer(&input,&cout);
+  lexer->yylex();
+  return 0;
 }
 
 int symbolTableLoc(string key, string value)
